@@ -1,0 +1,201 @@
+# InsightFlow Synthetic Data Generation Configuration Settings
+
+# General Engine Settings
+NUMBER_OF_USERS: 100000
+RANDOM_SEED: 42
+LOG_LEVEL: "INFO"
+OUTPUT_FILE_PATH: "data/raw/users.csv"
+REPORT_FILE_PATH: "data/raw/generation_report.md"
+
+# Temporal Date Boundary Parameters
+REGISTRATION_DATE_RANGE:
+  START_DATE: "2025-07-01"
+  END_DATE: "2026-06-30"
+
+# Geographic State Distributions (Absolute Weights summing to 1.0)
+STATE_DISTRIBUTION:
+  Delhi: 0.06
+  Uttar Pradesh: 0.11
+  Punjab: 0.04
+  Karnataka: 0.13
+  Tamil Nadu: 0.10
+  Telangana: 0.07
+  Kerala: 0.03
+  Maharashtra: 0.19
+  Gujarat: 0.08
+  West Bengal: 0.06
+  Odisha: 0.03
+  Madhya Pradesh: 0.07
+  Assam: 0.03
+
+# State-to-City Array Mappings
+CITY_MAPPING:
+  Delhi:
+    - "New Delhi"
+  Uttar Pradesh:
+    - "Noida"
+    - "Lucknow"
+    - "Kanpur"
+    - "Varanasi"
+  Punjab:
+    - "Ludhiana"
+    - "Amritsar"
+  Karnataka:
+    - "Bangalore"
+    - "Mysore"
+    - "Hubli"
+  Tamil Nadu:
+    - "Chennai"
+    - "Coimbatore"
+    - "Madurai"
+  Telangana:
+    - "Hyderabad"
+    - "Warangal"
+  Kerala:
+    - "Kochi"
+    - "Thiruvananthapuram"
+  Maharashtra:
+    - "Mumbai"
+    - "Pune"
+    - "Nagpur"
+    - "Nashik"
+  Gujarat:
+    - "Ahmedabad"
+    - "Surat"
+    - "Rajkot"
+  West Bengal:
+    - "Kolkata"
+    - "Siliguri"
+  Odisha:
+    - "Bhubaneswar"
+    - "Cuttack"
+  Madhya Pradesh:
+    - "Indore"
+    - "Bhopal"
+    - "Gwalior"
+  Assam:
+    - "Guwahati"
+    - "Silchar"
+
+# City-to-Tier Classification (RBI Guidelines)
+CITY_TIER_MAPPING:
+  "New Delhi": "Tier 1"
+  "Noida": "Tier 2"
+  "Lucknow": "Tier 2"
+  "Kanpur": "Tier 2"
+  "Varanasi": "Tier 3"
+  "Ludhiana": "Tier 2"
+  "Amritsar": "Tier 2"
+  "Bangalore": "Tier 1"
+  "Mysore": "Tier 2"
+  "Hubli": "Tier 3"
+  "Chennai": "Tier 1"
+  "Coimbatore": "Tier 2"
+  "Madurai": "Tier 3"
+  "Hyderabad": "Tier 1"
+  "Warangal": "Tier 3"
+  "Kochi": "Tier 2"
+  "Thiruvananthapuram": "Tier 2"
+  "Mumbai": "Tier 1"
+  "Pune": "Tier 1"
+  "Nagpur": "Tier 2"
+  "Nashik": "Tier 3"
+  "Ahmedabad": "Tier 1"
+  "Surat": "Tier 2"
+  "Rajkot": "Tier 3"
+  "Kolkata": "Tier 1"
+  "Siliguri": "Tier 3"
+  "Bhubaneswar": "Tier 2"
+  "Cuttack": "Tier 3"
+  "Indore": "Tier 2"
+  "Bhopal": "Tier 2"
+  "Gwalior": "Tier 3"
+  "Guwahati": "Tier 2"
+  "Silchar": "Tier 3"
+
+# Gender Distribution
+GENDER_DISTRIBUTION:
+  Male: 0.55
+  Female: 0.43
+  Other: 0.02
+
+# Age Band Distribution
+AGE_DISTRIBUTION:
+  18-24: 0.25
+  25-34: 0.50
+  35-44: 0.18
+  45-54: 0.05
+  55-65: 0.02
+
+# Education Level Mapping
+EDUCATION_MAPPING:
+  High School: 0.15
+  Undergraduate: 0.50
+  Graduate: 0.25
+  Postgraduate: 0.08
+  Doctorate: 0.02
+
+# Occupation Distribution
+OCCUPATION_DISTRIBUTION:
+  Salaried: 0.60
+  Self-Employed: 0.20
+  Professional: 0.10
+  Retired: 0.05
+  Student: 0.05
+
+# Occupation Income ranges (Lognormal params)
+INCOME_RANGES:
+  Salaried:
+    median: 42000
+    sigma: 0.40
+    min: 18000
+    max: 250000
+  Self-Employed:
+    median: 45000
+    sigma: 0.55
+    min: 15000
+    max: 400000
+  Professional:
+    median: 80000
+    sigma: 0.45
+    min: 35000
+    max: 500000
+  Retired:
+    median: 25000
+    sigma: 0.35
+    min: 12000
+    max: 80000
+  Student:
+    median: 3000
+    sigma: 0.60
+    min: 0
+    max: 15000
+
+# CIBIL Score Segment Distribution
+CIBIL_DISTRIBUTION:
+  NTC: 0.12
+  Poor: 0.08
+  Fair: 0.20
+  Good: 0.40
+  Excellent: 0.20
+
+# OS/Device Class Distribution
+DEVICE_DISTRIBUTION:
+  Mobile-Android: 0.85
+  Mobile-iOS: 0.10
+  Desktop-Windows: 0.04
+  Desktop-MacOS: 0.01
+
+# Marketing/Acquisition Channel Distribution
+ACQUISITION_CHANNEL_DISTRIBUTION:
+  Google Ads: 0.30
+  Meta Ads: 0.35
+  Affiliate: 0.20
+  Referral: 0.10
+  Organic: 0.05
+
+# Platform Compound Monthly Growth Rate (CMGR)
+GROWTH_RATE: 0.06
+
+# Allowed Statistical Deviation Threshold for Distribution Checks
+VALIDATION_TOLERANCE: 0.02

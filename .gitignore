@@ -1,0 +1,11 @@
+*.pyc
+__pycache__/
+.venv/
+venv/
+*.db
+*.duckdb
+logs/
+data/raw/
+data/processed/
+data/synthetic/
+data/external/
