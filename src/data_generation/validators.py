@@ -113,13 +113,13 @@ def validate_dataset_distributions(df: pd.DataFrame, config: GeneratorConfig) ->
             logger.error(f"Gender distribution check failed for '{gender}': Target={target:.4f}, Actual={actual:.4f} (diff={diff:.4f} > tolerance={direct_tolerance})")
             passed = False
 
-    # 3b. Education Distribution (Direct)
+    # 3b. Education Distribution (Skewed due to age correlations)
     edu_actual = df["education_level"].value_counts(normalize=True).to_dict()
     for edu, target in config.EDUCATION_DISTRIBUTION.items():
         actual = edu_actual.get(edu, 0.0)
         diff = abs(actual - target)
-        if diff > direct_tolerance:
-            logger.error(f"Education distribution check failed for '{edu}': Target={target:.4f}, Actual={actual:.4f} (diff={diff:.4f} > tolerance={direct_tolerance})")
+        if diff > skewed_tolerance:
+            logger.error(f"Education distribution check failed for '{edu}': Target={target:.4f}, Actual={actual:.4f} (diff={diff:.4f} > tolerance={skewed_tolerance})")
             passed = False
 
     # 3c. Occupation Distribution (Skewed)

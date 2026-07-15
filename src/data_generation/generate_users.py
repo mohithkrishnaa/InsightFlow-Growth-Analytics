@@ -13,8 +13,7 @@ from src.data_generation.config import load_config
 from src.data_generation.logging_config import setup_logging
 from src.data_generation.demographics import generate_demographics
 from src.data_generation.geography import generate_geography
-from src.data_generation.finance import generate_employment_and_income, generate_credit_profile
-from src.data_generation.acquisition import generate_device, generate_acquisition_channel
+from src.data_generation.profile import generate_profile
 from src.data_generation.validators import validate_record_integrity, validate_dataset_distributions
 from src.data_generation.exporter import export_dataset
 
@@ -108,28 +107,11 @@ def generate_users_pipeline(config_path: str) -> None:
             # Draw demographics
             demo = generate_demographics(config, rng)
             
-            # Draw financial variables
-            occ, income = generate_employment_and_income(
-                demo["age"], 
-                demo["education_level"], 
-                config, 
-                rng
-            )
-            
-            cibil = generate_credit_profile(
-                demo["age"], 
-                occ, 
-                income, 
-                config, 
-                rng
-            )
-            
             # Draw geography
-            geo = generate_geography(rng)
+            geo = generate_geography(rng, config)
             
-            # Draw metadata
-            device = generate_device(income, config, rng)
-            channel = generate_acquisition_channel(demo["age"], income, cibil, config, rng)
+            # Draw customer profile
+            prof = generate_profile(demo["age"], demo["education_level"], config, rng)
             
             # Construct dictionary
             record = {
@@ -140,11 +122,11 @@ def generate_users_pipeline(config_path: str) -> None:
                 "state": geo["state"],
                 "city": geo["city"],
                 "city_tier": geo["city_tier"],
-                "occupation": occ,
-                "monthly_income": income,
-                "cibil_score": cibil,
-                "acquisition_channel": channel,
-                "device": device,
+                "occupation": prof["occupation"],
+                "monthly_income": prof["monthly_income"],
+                "cibil_score": prof["cibil_score"],
+                "acquisition_channel": prof["acquisition_channel"],
+                "device": prof["device"],
                 "registration_date": str(reg_date)
             }
             

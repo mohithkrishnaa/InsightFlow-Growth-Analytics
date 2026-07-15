@@ -4,8 +4,8 @@
 NUMBER_OF_USERS: 100000
 RANDOM_SEED: 42
 LOG_LEVEL: "INFO"
-OUTPUT_FILE_PATH: "data/raw/users.csv"
-REPORT_FILE_PATH: "data/raw/generation_report.md"
+OUTPUT_FILE_PATH: "data/synthetic/users.csv"
+REPORT_FILE_PATH: "data/synthetic/generation_report.md"
 
 # Temporal Date Boundary Parameters
 REGISTRATION_DATE_RANGE:
@@ -112,6 +112,42 @@ CITY_TIER_MAPPING:
   "Gwalior": "Tier 3"
   "Guwahati": "Tier 2"
   "Silchar": "Tier 3"
+
+# City selection weights
+CITY_WEIGHTS:
+  "New Delhi": 0.06
+  "Noida": 0.04
+  "Lucknow": 0.03
+  "Kanpur": 0.02
+  "Varanasi": 0.02
+  "Ludhiana": 0.02
+  "Amritsar": 0.02
+  "Bangalore": 0.10
+  "Mysore": 0.02
+  "Hubli": 0.01
+  "Chennai": 0.06
+  "Coimbatore": 0.03
+  "Madurai": 0.01
+  "Hyderabad": 0.06
+  "Warangal": 0.01
+  "Kochi": 0.02
+  "Thiruvananthapuram": 0.01
+  "Mumbai": 0.10
+  "Pune": 0.05
+  "Nagpur": 0.02
+  "Nashik": 0.02
+  "Ahmedabad": 0.04
+  "Surat": 0.02
+  "Rajkot": 0.02
+  "Kolkata": 0.05
+  "Siliguri": 0.01
+  "Bhubaneswar": 0.02
+  "Cuttack": 0.01
+  "Indore": 0.03
+  "Bhopal": 0.03
+  "Gwalior": 0.01
+  "Guwahati": 0.02
+  "Silchar": 0.01
 
 # Gender Distribution
 GENDER_DISTRIBUTION:

@@ -7,7 +7,7 @@ weighted probability selections from AppConfig, and schema validations.
 
 import logging
 import numpy as np
-from typing import Dict
+from typing import Dict, Any
 from src.data_generation.config import AppConfig
 
 # Setup local logger
@@ -187,3 +187,25 @@ def generate_education(age: int, config: AppConfig, rng: np.random.Generator) ->
         raise ValueError(error_msg)
 
     return education_level
+
+
+def generate_demographics(config: AppConfig, rng: np.random.Generator) -> Dict[str, Any]:
+    """
+    Orchestrates the generation of age, gender, and education level for a synthetic user.
+
+    Args:
+        config (AppConfig): Shared application configuration.
+        rng (np.random.Generator): Independent random number generator.
+
+    Returns:
+        Dict[str, Any]: Generated demographics with keys 'age', 'gender', and 'education_level'.
+    """
+    logger.info("Generating user demographics")
+    age = generate_age(config, rng)
+    gender = generate_gender(config, rng)
+    education_level = generate_education(age, config, rng)
+    return {
+        "age": age,
+        "gender": gender,
+        "education_level": education_level
+    }
