@@ -8,7 +8,7 @@ configuration-driven.
 
 import logging
 import numpy as np
-from typing import Dict, Any, Tuple, List
+from typing import Dict, Any, Tuple, List, Optional
 from src.data_generation.config import AppConfig
 
 # Setup local logger
@@ -160,7 +160,7 @@ def generate_credit_profile(
     monthly_income: int, 
     config: AppConfig, 
     rng: np.random.Generator
-) -> int:
+) -> Tuple[Optional[int], bool]:
     """
     Generates CIBIL credit score skewed by age, income, and occupation.
 
@@ -172,21 +172,21 @@ def generate_credit_profile(
         rng (np.random.Generator): Independent random number generator.
 
     Returns:
-        int: The generated CIBIL score (-1 for New to Credit, or [300, 900]).
+        Tuple[Optional[int], bool]: The generated CIBIL score (None for New to Credit, or [300, 900]) and has_credit_history boolean.
     """
     logger.info("Generating CIBIL credit score", extra={"age": age, "occupation": occupation, "monthly_income": monthly_income})
 
     # 1. New to Credit (NTC) check
-    # Students or users under 22 have an 80% probability of being NTC (-1)
+    # Students or users under 22 have an 80% probability of being NTC
     if occupation == "Student" or age < 22:
         if rng.random() < 0.80:
-            logger.info("User is flagged as New to Credit (NTC)", extra={"cibil_score": -1})
-            return -1
+            logger.info("User is flagged as New to Credit (NTC)", extra={"cibil_score": None})
+            return None, False
     else:
         # Other profiles have a base 5% probability of being NTC
         if rng.random() < 0.05:
-            logger.info("User is flagged as New to Credit (NTC)", extra={"cibil_score": -1})
-            return -1
+            logger.info("User is flagged as New to Credit (NTC)", extra={"cibil_score": None})
+            return None, False
 
     # 2. Correlation skews for scored users
     cibil_dist = config.CIBIL_DISTRIBUTION
@@ -254,8 +254,7 @@ def generate_credit_profile(
     else:  # Excellent
         score = int(rng.integers(750, 900, endpoint=True))
 
-    logger.info("Generated CIBIL credit score successfully", extra={"cibil_category": selected_category, "cibil_score": score})
-    return score
+    return score, True
 
 
 def generate_device(
@@ -300,7 +299,7 @@ def generate_device(
 def generate_acquisition_channel(
     age: int, 
     monthly_income: int, 
-    cibil_score: int, 
+    cibil_score: Optional[int], 
     config: AppConfig, 
     rng: np.random.Generator
 ) -> str:
@@ -310,7 +309,7 @@ def generate_acquisition_channel(
     Args:
         age (int): Pre-generated age.
         monthly_income (int): Pre-generated monthly income.
-        cibil_score (int): Pre-generated CIBIL score.
+        cibil_score (Optional[int]): Pre-generated CIBIL score.
         config (AppConfig): Shared application configuration.
         rng (np.random.Generator): Independent random number generator.
 
@@ -337,7 +336,7 @@ def generate_acquisition_channel(
         channel_weights["Organic"] *= 0.7
 
     # 3. Credit score skews
-    if cibil_score != -1:
+    if cibil_score is not None:
         if cibil_score < 600:  # Subprime
             channel_weights["Affiliate"] *= 1.5
             channel_weights["Organic"] *= 0.3
@@ -384,7 +383,7 @@ def generate_profile(
     occupation, income = generate_occupation_and_income(age, education, config, rng)
 
     # Step 2: Draw Credit Score (CIBIL)
-    cibil = generate_credit_profile(age, occupation, income, config, rng)
+    cibil, has_credit_history = generate_credit_profile(age, occupation, income, config, rng)
 
     # Step 3: Draw Device preference
     device = generate_device(income, config, rng)
@@ -395,6 +394,7 @@ def generate_profile(
     return {
         "occupation": occupation,
         "monthly_income": income,
+        "has_credit_history": has_credit_history,
         "cibil_score": cibil,
         "acquisition_channel": channel,
         "device": device

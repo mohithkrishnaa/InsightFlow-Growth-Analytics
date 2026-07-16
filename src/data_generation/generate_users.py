@@ -124,6 +124,7 @@ def generate_users_pipeline(config_path: str) -> None:
                 "city_tier": geo["city_tier"],
                 "occupation": prof["occupation"],
                 "monthly_income": prof["monthly_income"],
+                "has_credit_history": prof["has_credit_history"],
                 "cibil_score": prof["cibil_score"],
                 "acquisition_channel": prof["acquisition_channel"],
                 "device": prof["device"],
@@ -151,7 +152,8 @@ def generate_users_pipeline(config_path: str) -> None:
     # Convert types for correct schema representation
     df["age"] = df["age"].astype(int)
     df["monthly_income"] = df["monthly_income"].astype(int)
-    df["cibil_score"] = df["cibil_score"].astype(int)
+    df["has_credit_history"] = df["has_credit_history"].astype(bool)
+    df["cibil_score"] = df["cibil_score"].astype("Int64")
     
     # 7. Dataset-level validation
     logger.info("Executing dataset-level validation and statistical checks...")

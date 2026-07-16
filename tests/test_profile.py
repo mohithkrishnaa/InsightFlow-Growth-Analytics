@@ -27,6 +27,7 @@ def test_generate_profile_keys(config, rng):
     profile = generate_profile(30, "Graduate", config, rng)
     assert "occupation" in profile
     assert "monthly_income" in profile
+    assert "has_credit_history" in profile
     assert "cibil_score" in profile
     assert "acquisition_channel" in profile
     assert "device" in profile
@@ -97,11 +98,11 @@ def test_credit_profile_ntc_probability(config, rng):
     Checks that Students/Underage are mostly NTC (-1), and others have a small NTC probability.
     """
     # Young / Students -> 80% NTC
-    young_ntc_count = sum(1 for _ in range(500) if generate_credit_profile(20, "Student", 0, config, rng) == -1)
+    young_ntc_count = sum(1 for _ in range(500) if generate_credit_profile(20, "Student", 0, config, rng)[0] is None)
     assert young_ntc_count > 300 # Should be around 400
 
     # Mature Salaried -> 5% NTC
-    mature_ntc_count = sum(1 for _ in range(500) if generate_credit_profile(40, "Salaried", 50000, config, rng) == -1)
+    mature_ntc_count = sum(1 for _ in range(500) if generate_credit_profile(40, "Salaried", 50000, config, rng)[0] is None)
     assert mature_ntc_count < 75 # Should be around 25
 
 def test_credit_profile_scored_bounds(config, rng):
@@ -109,9 +110,12 @@ def test_credit_profile_scored_bounds(config, rng):
     Verifies scored CIBIL scores fall within correct bands.
     """
     for _ in range(500):
-        score = generate_credit_profile(45, "Salaried", 60000, config, rng)
-        if score != -1:
+        score, has_credit = generate_credit_profile(45, "Salaried", 60000, config, rng)
+        if has_credit:
+            assert score is not None
             assert 300 <= score <= 900
+        else:
+            assert score is None
 
 def test_device_skew_by_income(config, rng):
     """

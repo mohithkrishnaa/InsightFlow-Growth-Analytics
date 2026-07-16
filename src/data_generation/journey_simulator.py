@@ -12,7 +12,7 @@ import sys
 import pandas as pd
 import numpy as np
 from abc import ABC
-from typing import Dict, Any, Tuple, List
+from typing import Dict, Any, Tuple, List, Optional
 
 from src.data_generation.config import AppConfig, load_config
 from src.data_generation.factory import BaseGenerator
@@ -40,7 +40,7 @@ class JourneySimulator(BaseGenerator):
         self._app_counter = 1
         self._lon_counter = 1
 
-    def _get_loan_approval_probability(self, cibil_score: int) -> float:
+    def _get_loan_approval_probability(self, cibil_score: Optional[int]) -> float:
         """
         Derives loan approval probability skewed by the user's CIBIL score.
         """
@@ -53,7 +53,7 @@ class JourneySimulator(BaseGenerator):
         good_rate = rates.get("good", 0.70)
         excellent_rate = rates.get("excellent", 0.95)
 
-        if cibil_score == -1:
+        if cibil_score is None or pd.isna(cibil_score):
             return ntc_rate
         elif cibil_score < 550:
             return poor_rate
@@ -328,14 +328,14 @@ class JourneySimulator(BaseGenerator):
         loan_amount = max(10000, min(500000, (loan_amount // 5000) * 5000))
 
         # Interest rate assignment based on credit rating
-        if cibil_score >= 750:
+        if cibil_score is None or pd.isna(cibil_score):
+            interest_rate = round(float(rng.uniform(15.0, 19.5)), 2)
+        elif cibil_score >= 750:
             interest_rate = round(float(rng.uniform(11.5, 14.5)), 2)
         elif cibil_score >= 650:
             interest_rate = round(float(rng.uniform(14.5, 18.0)), 2)
         elif cibil_score >= 550:
             interest_rate = round(float(rng.uniform(18.0, 22.0)), 2)
-        elif cibil_score == -1:
-            interest_rate = round(float(rng.uniform(15.0, 19.5)), 2)
         else:
             interest_rate = round(float(rng.uniform(22.0, 28.0)), 2)
 
@@ -344,7 +344,7 @@ class JourneySimulator(BaseGenerator):
         is_approved = rng.random() <= approval_prob
 
         # Set delay: high CIBIL gets fast auto-approval, low gets manual review
-        if cibil_score >= 750:
+        if cibil_score is not None and not pd.isna(cibil_score) and cibil_score >= 750:
             decision_delay = int(rng.integers(30, 300))  # 30s to 5m
         else:
             decision_delay = int(rng.integers(1800, 86400))  # 30m to 24h
@@ -381,9 +381,9 @@ class JourneySimulator(BaseGenerator):
 
         else:
             # Rejection Reasons based on constraints
-            if cibil_score < 550 and cibil_score != -1:
+            if cibil_score is not None and not pd.isna(cibil_score) and cibil_score < 550:
                 rejection_reason = "Low CIBIL Score"
-            elif cibil_score == -1 and rng.random() < 0.40:
+            elif (cibil_score is None or pd.isna(cibil_score)) and rng.random() < 0.40:
                 rejection_reason = "Inadequate Credit History"
             elif monthly_income < 20000:
                 rejection_reason = "Inadequate Monthly Income"
@@ -539,7 +539,8 @@ class JourneySimulator(BaseGenerator):
             device = str(row["device"])
             state = str(row["state"])
             channel = str(row["acquisition_channel"])
-            cibil_score = int(row["cibil_score"])
+            cibil_val = row["cibil_score"]
+            cibil_score = None if pd.isna(cibil_val) else int(cibil_val)
             monthly_income = int(row["monthly_income"])
             reg_date_str = str(row["registration_date"])
 

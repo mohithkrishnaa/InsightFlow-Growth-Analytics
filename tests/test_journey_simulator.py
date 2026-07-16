@@ -35,6 +35,7 @@ def test_journey_events_schema(config, rng):
         "user_id": "usr_0000001",
         "device": "Mobile-Android",
         "acquisition_channel": "Google Ads",
+        "has_credit_history": True,
         "cibil_score": 780,
         "monthly_income": 60000,
         "state": "Karnataka",
@@ -149,7 +150,7 @@ def test_approval_rates_and_rejections(config, rng):
     # 1. Test Approval Probabilities mapping
     assert simulator._get_loan_approval_probability(800) == 0.95  # Excellent
     assert simulator._get_loan_approval_probability(400) == 0.10  # Poor
-    assert simulator._get_loan_approval_probability(-1) == 0.55   # NTC
+    assert simulator._get_loan_approval_probability(None) == 0.55   # NTC
 
     # 2. Test rejection reason when CIBIL is low
     apply_time = pd.to_datetime("2025-07-15 12:00:00")
@@ -168,11 +169,14 @@ def test_journey_simulation_generation(config, tmp_path):
         "user_id": ["usr_0000001", "usr_0000002"],
         "device": ["Mobile-Android", "Mobile-iOS"],
         "acquisition_channel": ["Google Ads", "Organic"],
-        "cibil_score": [780, 450],
+        "has_credit_history": [True, False],
+        "cibil_score": [780, None],
         "monthly_income": [60000, 15000],
         "state": ["Delhi", "Maharashtra"],
         "registration_date": ["2025-07-01", "2025-07-02"]
     })
+    # Force Int64 type
+    dummy_data["cibil_score"] = dummy_data["cibil_score"].astype("Int64")
     dummy_data.to_csv(users_csv, index=False)
     
     # Set all conversion probabilities to 1.0 for testing generation guarantee

@@ -89,10 +89,12 @@ VALIDATION_TOLERANCE: 0.05  # Higher tolerance for small sample size (500 record
     expected_cols = [
         "user_id", "gender", "age", "education_level", 
         "state", "city", "city_tier", "occupation", 
-        "monthly_income", "cibil_score", "acquisition_channel", 
+        "monthly_income", "has_credit_history", "cibil_score", "acquisition_channel", 
         "device", "registration_date"
     ]
     assert list(df.columns) == expected_cols
 
-    # Ensure no nulls
-    assert df.isnull().sum().sum() == 0
+    # Ensure no nulls except in cibil_score
+    null_cols = df.columns[df.isnull().any()].tolist()
+    for col in null_cols:
+        assert col == "cibil_score"

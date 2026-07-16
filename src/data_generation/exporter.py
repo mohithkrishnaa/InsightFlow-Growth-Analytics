@@ -34,12 +34,15 @@ def export_dataset(df: pd.DataFrame, config: GeneratorConfig, execution_time_sec
         n_users = len(df)
         
         # Calculate CIBIL actual frequencies
+        has_credit = df["has_credit_history"].values
         cibil_scores = df["cibil_score"].values
-        ntc_count = np.sum(cibil_scores == -1)
-        poor_count = np.sum((cibil_scores >= 300) & (cibil_scores <= 549))
-        fair_count = np.sum((cibil_scores >= 550) & (cibil_scores <= 649))
-        good_count = np.sum((cibil_scores >= 650) & (cibil_scores <= 749))
-        excellent_count = np.sum((cibil_scores >= 750) & (cibil_scores <= 900))
+        ntc_count = np.sum(~has_credit | pd.isna(df["cibil_score"]))
+        
+        cibil_is_valid = has_credit & ~pd.isna(df["cibil_score"])
+        poor_count = np.sum(cibil_is_valid & (cibil_scores >= 300) & (cibil_scores <= 549))
+        fair_count = np.sum(cibil_is_valid & (cibil_scores >= 550) & (cibil_scores <= 649))
+        good_count = np.sum(cibil_is_valid & (cibil_scores >= 650) & (cibil_scores <= 749))
+        excellent_count = np.sum(cibil_is_valid & (cibil_scores >= 750) & (cibil_scores <= 900))
 
         actual_cibil = {
             "NTC": ntc_count / n_users,

@@ -21,6 +21,7 @@ def valid_record():
         "city_tier": "Tier 1",
         "occupation": "Salaried",
         "monthly_income": 48000,
+        "has_credit_history": True,
         "cibil_score": 745,
         "acquisition_channel": "Google Ads",
         "device": "Mobile-Android",
@@ -107,3 +108,24 @@ def test_validate_dataset_duplicates(config, valid_record):
     
     df = pd.DataFrame([valid_record, r2])
     assert validate_dataset_distributions(df, config) is False
+
+def test_validate_record_integrity_ntc(valid_record):
+    """
+    Asserts NTC users pass with None CIBIL score.
+    """
+    r_ntc = valid_record.copy()
+    r_ntc["has_credit_history"] = False
+    r_ntc["cibil_score"] = None
+    assert validate_record_integrity(r_ntc) is True
+
+    # Mismatch: has_credit_history=False, but cibil_score is set
+    r_mismatch = valid_record.copy()
+    r_mismatch["has_credit_history"] = False
+    r_mismatch["cibil_score"] = 700
+    assert validate_record_integrity(r_mismatch) is False
+    
+    # Mismatch: has_credit_history=True, but cibil_score is None
+    r_mismatch_2 = valid_record.copy()
+    r_mismatch_2["has_credit_history"] = True
+    r_mismatch_2["cibil_score"] = None
+    assert validate_record_integrity(r_mismatch_2) is False

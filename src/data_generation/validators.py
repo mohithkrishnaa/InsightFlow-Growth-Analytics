@@ -25,10 +25,22 @@ def validate_record_integrity(record: Dict[str, Any]) -> bool:
         if monthly_income < 0:
             return False
 
-        # 3. Bounds check on CIBIL
-        cibil = record["cibil_score"]
-        if not (cibil == -1 or (300 <= cibil <= 900)):
+        # 3. Bounds check on CIBIL and credit history consistency
+        if "has_credit_history" not in record:
             return False
+        has_credit = record["has_credit_history"]
+        if not isinstance(has_credit, (bool, np.bool_)):
+            return False
+
+        cibil = record["cibil_score"]
+        if not has_credit:
+            if cibil is not None and not pd.isna(cibil):
+                return False
+        else:
+            if cibil is None or pd.isna(cibil):
+                return False
+            if not (300 <= cibil <= 900):
+                return False
 
         # 4. Education age checks
         edu = record["education_level"]
@@ -98,9 +110,10 @@ def validate_dataset_distributions(df: pd.DataFrame, config: GeneratorConfig) ->
         logger.error("Dataset validation failed: Duplicate user_id entries detected.")
         passed = False
 
-    # 2. Completeness / No Nulls
-    if df.isnull().any().any():
-        logger.error("Dataset validation failed: Null values found in columns.")
+    # 2. Completeness / No Nulls (except cibil_score)
+    cols_to_check = [col for col in df.columns if col != "cibil_score"]
+    if df[cols_to_check].isnull().any().any():
+        logger.error("Dataset validation failed: Null values found in columns (excluding cibil_score).")
         passed = False
 
     # 3. Distribution Checks:
@@ -150,12 +163,15 @@ def validate_dataset_distributions(df: pd.DataFrame, config: GeneratorConfig) ->
             passed = False
 
     # 3f. CIBIL Scores Segment Distributions (Skewed)
+    has_credit = df["has_credit_history"].values
     cibil_scores = df["cibil_score"].values
-    ntc_count = np.sum(cibil_scores == -1)
-    poor_count = np.sum((cibil_scores >= 300) & (cibil_scores <= 549))
-    fair_count = np.sum((cibil_scores >= 550) & (cibil_scores <= 649))
-    good_count = np.sum((cibil_scores >= 650) & (cibil_scores <= 749))
-    excellent_count = np.sum((cibil_scores >= 750) & (cibil_scores <= 900))
+    ntc_count = np.sum(~has_credit | pd.isna(df["cibil_score"]))
+    
+    cibil_is_valid = has_credit & ~pd.isna(df["cibil_score"])
+    poor_count = np.sum(cibil_is_valid & (cibil_scores >= 300) & (cibil_scores <= 549))
+    fair_count = np.sum(cibil_is_valid & (cibil_scores >= 550) & (cibil_scores <= 649))
+    good_count = np.sum(cibil_is_valid & (cibil_scores >= 650) & (cibil_scores <= 749))
+    excellent_count = np.sum(cibil_is_valid & (cibil_scores >= 750) & (cibil_scores <= 900))
 
     actual_cibil_dist = {
         "NTC": ntc_count / n_users,

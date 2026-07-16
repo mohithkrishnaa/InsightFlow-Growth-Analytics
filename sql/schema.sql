@@ -12,6 +12,7 @@ CREATE TABLE users (
     city_tier VARCHAR(20),
     occupation VARCHAR(100),
     monthly_income NUMERIC(12,2),
+    has_credit_history BOOLEAN NOT NULL,
     cibil_score INTEGER CHECK (cibil_score BETWEEN 300 AND 900),
     acquisition_channel VARCHAR(50),
     device VARCHAR(50),
