@@ -90,6 +90,8 @@ class AppConfig(BaseModel):
     CITY_MAPPING: Dict[str, List[str]] = Field(description="State to city array lookup mapping")
     CITY_TIER_MAPPING: Dict[str, str] = Field(description="City to RBI cost-of-living Tier classification")
     CITY_WEIGHTS: Dict[str, float] = Field(default_factory=dict, description="City weight mapping")
+    FUNNEL_CONVERSION_RATES: Dict[str, float] = Field(default_factory=dict, description="Journey funnel conversion rates")
+    CIBIL_APPROVAL_RATES: Dict[str, float] = Field(default_factory=dict, description="CIBIL-based loan approval rates")
 
     OCCUPATION_DISTRIBUTION: Dict[str, float] = Field(description="Occupation segment distribution weights")
     EDUCATION_MAPPING: Dict[str, float] = Field(description="Education level distribution weights")

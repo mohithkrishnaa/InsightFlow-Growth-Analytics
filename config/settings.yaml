@@ -235,3 +235,22 @@ GROWTH_RATE: 0.06
 
 # Allowed Statistical Deviation Threshold for Distribution Checks
 VALIDATION_TOLERANCE: 0.02
+
+# Journey Funnel Stage Conversion Probabilities
+FUNNEL_CONVERSION_RATES:
+  impression_to_click: 0.15
+  click_to_install: 0.50
+  otp_to_kyc_start: 0.85
+  kyc_start_to_face_match: 0.95
+  face_match_to_pan_verify: 0.95
+  pan_verify_to_kyc_complete: 0.98
+  kyc_complete_to_loan_apply: 0.75
+  approved_to_disbursed: 0.90
+
+# CIBIL-based Loan Approval Rates
+CIBIL_APPROVAL_RATES:
+  ntc: 0.55
+  poor: 0.10
+  fair: 0.35
+  good: 0.70
+  excellent: 0.95
