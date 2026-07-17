@@ -13,10 +13,23 @@ CREATE TABLE users (
     occupation VARCHAR(100),
     monthly_income NUMERIC(12,2),
     has_credit_history BOOLEAN NOT NULL,
-    cibil_score INTEGER CHECK (cibil_score BETWEEN 300 AND 900),
+    cibil_score INTEGER,
     acquisition_channel VARCHAR(50),
     device VARCHAR(50),
-    registration_date TIMESTAMP
+    registration_date TIMESTAMP,
+
+    CONSTRAINT chk_credit_profile
+    CHECK (
+        (
+            has_credit_history = TRUE
+            AND cibil_score BETWEEN 300 AND 900
+        )
+        OR
+        (
+            has_credit_history = FALSE
+            AND cibil_score IS NULL
+        )
+    )
 );
 
 CREATE TABLE marketing_events (
