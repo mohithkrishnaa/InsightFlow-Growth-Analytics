@@ -35,6 +35,7 @@ The project simulates a real-world fintech analytics ecosystem using a fictional
 ## Executive Overview
 <img width="1280" height="800" alt="Executive Overview" src="https://github.com/user-attachments/assets/f3a9a249-7f20-4184-b4a2-05ed67535866" />
 
+Provides a consolidated view of business KPIs, customer growth, conversion metrics, and operational performance.
 
 
 ---
@@ -43,12 +44,17 @@ The project simulates a real-world fintech analytics ecosystem using a fictional
 
 <img width="1280" height="800" alt="Funnel Analytics" src="https://github.com/user-attachments/assets/24a4f904-1c32-457d-b8f8-596aee3a6235" />
 
+Visualizes customer movement across acquisition stages while identifying conversion bottlenecks and drop-off points.
+
+
 
 ---
 
 ## Marketing Attribution
 
 <img width="1280" height="800" alt="Marketing Attribution" src="https://github.com/user-attachments/assets/10c156ec-8e6f-4045-a154-669eed620242" />
+
+Measures campaign effectiveness across acquisition channels using attribution metrics and channel-level performance indicators.
 
 
 ---
@@ -57,12 +63,16 @@ The project simulates a real-world fintech analytics ecosystem using a fictional
 
 <img width="1280" height="800" alt="Customer Portfolio Analytics" src="https://github.com/user-attachments/assets/964753fb-604a-4a1b-96b3-94abefae8d44" />
 
+Analyzes customer demographics, behavioural patterns, geographic distribution, and engagement trends.
+
 
 ---
 
 ## Experiment Analytics
 
 <img width="1280" height="800" alt="Experiment Analytics" src="https://github.com/user-attachments/assets/15e038b9-5e05-45b7-94af-59ccdc4944c6" />
+
+Tracks A/B experiments, compares performance metrics, and evaluates experiment outcomes.
 
 
 ---
@@ -176,37 +186,6 @@ InsightFlow/
 └── README.md
 ```
 
----
-
-# Dashboard Modules
-
-### Executive Overview
-
-Provides a consolidated view of business KPIs, customer growth, conversion metrics, and operational performance.
-
----
-
-### Funnel Analytics
-
-Visualizes customer movement across acquisition stages while identifying conversion bottlenecks and drop-off points.
-
----
-
-### Marketing Attribution
-
-Measures campaign effectiveness across acquisition channels using attribution metrics and channel-level performance indicators.
-
----
-
-### Customer Intelligence
-
-Analyzes customer demographics, behavioural patterns, geographic distribution, and engagement trends.
-
----
-
-### Experiment Analytics
-
-Tracks A/B experiments, compares performance metrics, and evaluates experiment outcomes.
 
 ---
 
