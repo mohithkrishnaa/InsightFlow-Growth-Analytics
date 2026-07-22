@@ -31,7 +31,6 @@ The project simulates a real-world fintech analytics ecosystem using a fictional
 
 # Dashboard Preview
 
-> Replace the placeholders below with actual screenshots after pushing.
 
 ## Executive Overview
 <img width="1280" height="800" alt="Executive Overview" src="https://github.com/user-attachments/assets/f3a9a249-7f20-4184-b4a2-05ed67535866" />
