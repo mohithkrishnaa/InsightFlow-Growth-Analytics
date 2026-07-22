@@ -16,15 +16,36 @@
 -- customer lifecycle, from initial ad impressions to final loan disbursement.
 -- BI Dashboard Usage: Top-level funnel progression bar chart showing drop-off and conversion rates.
 -- ----------------------------------------------------------------------------
-WITH funnel_volumes AS (
+WITH normalized_marketing AS (
+    SELECT 
+        event_id,
+        user_id,
+        campaign,
+        channel,
+        ad_group,
+        device,
+        state,
+        cost,
+        timestamp,
+        CASE 
+            WHEN row_num = 1 THEN 'Impression'
+            WHEN row_num = 2 THEN 'Click'
+            WHEN row_num = 3 THEN 'Install'
+        END AS event_type
+    FROM (
+        SELECT *, ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY event_id ASC) as row_num
+        FROM marketing_events
+    ) sub
+),
+funnel_volumes AS (
     SELECT 1 AS stage_num, 'Marketing Impression' AS stage_name, COUNT(DISTINCT user_id) AS unique_users
-    FROM marketing_events WHERE event_type = 'Impression'
+    FROM normalized_marketing WHERE event_type = 'Impression'
     UNION ALL
     SELECT 2, 'Marketing Click', COUNT(DISTINCT user_id)
-    FROM marketing_events WHERE event_type = 'Click'
+    FROM normalized_marketing WHERE event_type = 'Click'
     UNION ALL
     SELECT 3, 'Marketing Install', COUNT(DISTINCT user_id)
-    FROM marketing_events WHERE event_type = 'Install'
+    FROM normalized_marketing WHERE event_type = 'Install'
     UNION ALL
     SELECT 4, 'App Open', COUNT(DISTINCT user_id)
     FROM app_events WHERE event_name = 'App Open'

@@ -9,3 +9,6 @@ data/raw/
 data/processed/
 data/synthetic/
 data/external/
+
+# Environment variables
+.env

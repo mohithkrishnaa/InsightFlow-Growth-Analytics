@@ -1,0 +1,1273 @@
+/* Google Fonts - Geist & Inter import */
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+
+/* Reusable SaaS UI Design System Variables (Linear & Stripe-style) */
+:root {
+    --bg: #050505;
+    --sidebar: #080808;
+    --card: #101010;
+    --hover: #151515;
+    --border: rgba(255, 255, 255, 0.06);
+    --divider: rgba(255, 255, 255, 0.04);
+    
+    --text: #FFFFFF;
+    --text-primary: #FFFFFF;
+    --text-secondary: #B3B3B3;
+    --muted: #6B7280;
+    --text-muted: #6B7280;
+    
+    --bg-primary: var(--bg);
+    --bg-sidebar: var(--sidebar);
+    --bg-card: var(--card);
+    --bg-hover: var(--hover);
+    
+    --success: #22C55E;
+    --warning: #F59E0B;
+    --danger: #EF4444;
+    
+    --accent-blue: #3B82F6;
+    --accent-purple: #8B5CF6;
+    
+    --radius: 12px;
+    --transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    
+    --font-sans: 'Geist', 'Inter', '-apple-system', sans-serif;
+}
+
+/* ----------------------------------------------------
+   Streamlit Specific Overrides & Layout Resets
+   ---------------------------------------------------- */
+
+/* Hide default Streamlit visual clutter */
+#MainMenu, header, footer, [data-testid="stHeader"], [data-testid="stDecoration"] {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+/* Root App Background */
+.stApp {
+    background-color: var(--bg-primary) !important;
+    color: var(--text-secondary) !important;
+    font-family: var(--font-sans) !important;
+}
+
+/* Sidebar Custom Styling */
+[data-testid="stSidebar"] {
+    background-color: var(--bg-sidebar) !important;
+    border-right: 1px solid var(--border) !important;
+    padding-top: 1rem !important;
+}
+
+/* Sidebar width constraints matching Reference 1 (260px) */
+[data-testid="stSidebar"] > div:first-child {
+    width: 260px !important;
+}
+
+/* Remove default block container extra margins and padding */
+[data-testid="stAppViewBlockContainer"] {
+    padding-top: 0rem !important;
+    padding-bottom: 2rem !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+    max-width: 95% !important;
+}
+
+/* Styling vertical whitespace between elements */
+[data-testid="element-container"] {
+    margin-bottom: 0.25rem !important;
+}
+
+/* Eliminate blue overlays and focus indicators */
+.st-ae, .st-af, .st-ag, .st-ah, .st-ai, .st-aj {
+    border-color: var(--border) !important;
+}
+
+/* ----------------------------------------------------
+   Typography & Hierarchy Overrides
+   ---------------------------------------------------- */
+h1 {
+    font-size: 56px !important;
+    font-weight: 700 !important;
+    color: var(--text-primary) !important;
+    letter-spacing: -0.03em !important;
+    line-height: 1.1 !important;
+    margin-top: 1rem !important;
+    margin-bottom: 0.25rem !important;
+}
+
+h2 {
+    font-size: 24px !important;
+    font-weight: 600 !important;
+    color: var(--text-primary) !important;
+    letter-spacing: -0.020em !important;
+    line-height: 1.2 !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 0.5rem !important;
+}
+
+h3, .card-title-text {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    color: var(--text-primary) !important;
+    letter-spacing: -0.015em !important;
+    margin-top: 1rem !important;
+    margin-bottom: 0.5rem !important;
+}
+
+p, span, label {
+    font-family: var(--font-sans) !important;
+    letter-spacing: -0.01em !important;
+    line-height: 1.5 !important;
+}
+
+/* Style default metric values if they leak through */
+[data-testid="stMetricValue"] {
+    font-size: 42px !important;
+    font-weight: 700 !important;
+    color: var(--text-primary) !important;
+    letter-spacing: -0.03em !important;
+}
+
+/* Horizontal line custom separator */
+hr {
+    border: 0 !important;
+    height: 1px !important;
+    background-color: var(--divider) !important;
+    margin: 1.5rem 0 !important;
+}
+
+/* Subtitles / description styling */
+.page-subtitle {
+    font-size: 18px !important;
+    font-weight: 400 !important;
+    color: var(--text-secondary) !important;
+    margin-top: 0px !important;
+    margin-bottom: 1.5rem !important;
+    letter-spacing: -0.015em !important;
+}
+
+/* ----------------------------------------------------
+   Top Navigation Bar Component
+   ---------------------------------------------------- */
+.top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.top-nav-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.top-nav-center {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    max-width: 340px;
+    margin: 0 1.5rem;
+}
+
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 12px;
+    width: 100%;
+}
+
+.search-icon {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.search-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    font-size: 13px;
+    width: 100%;
+}
+
+.top-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.live-badge {
+    background-color: rgba(34, 197, 94, 0.1);
+    color: var(--success);
+    border: 1px solid rgba(34, 197, 94, 0.2);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.live-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--success);
+    border-radius: 9999px;
+    display: inline-block;
+}
+
+.nav-icon-container {
+    position: relative;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    border: 1px solid var(--border);
+}
+
+.nav-icon-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 15px;
+    height: 15px;
+    background-color: var(--accent-blue);
+    color: var(--text-primary);
+    border-radius: 9999px;
+    font-size: 9px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-profile-circle {
+    width: 32px;
+    height: 32px;
+    background-color: #242424;
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    cursor: pointer;
+}
+
+/* Date range picker button & refresh styling */
+.nav-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background-color: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 14px;
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.nav-action-btn:hover {
+    background-color: var(--bg-hover);
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* ----------------------------------------------------
+   KPI Cards Visual Styling (Master UI Proportions)
+   ---------------------------------------------------- */
+.kpi-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 1.25rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    box-shadow: none !important;
+    height: 100%;
+}
+
+.kpi-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.kpi-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+.kpi-icon-container {
+    width: 28px;
+    height: 28px;
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.kpi-body {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 4px;
+}
+
+.kpi-value {
+    font-size: 34px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+}
+
+.kpi-sparkline-container {
+    padding-bottom: 2px;
+}
+
+.kpi-footer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+.kpi-trend {
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.kpi-comparison {
+    color: var(--text-muted);
+}
+
+/* ----------------------------------------------------
+   Custom Navigation Pills (Sidebar Overrides)
+   ---------------------------------------------------- */
+[data-testid="stSidebarUserContent"] {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: 96vh !important;
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+}
+
+/* Navigation category label header */
+.sidebar-category-header {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 1rem 1rem 0.5rem 1rem;
+    margin-top: 0.5rem;
+}
+
+/* Style the default radio navigation items inside the sidebar */
+div[data-testid="stSidebar"] div[data-testid="stRadio"] {
+    padding: 0 !important;
+}
+
+div[data-testid="stSidebar"] div[data-testid="stRadio"] > label {
+    display: none !important;
+}
+
+div[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+}
+
+div[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > label {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    background-color: transparent !important;
+    border: 1px solid transparent !important;
+    border-radius: 8px !important;
+    padding: 6px 12px !important;
+    margin-bottom: 0px !important;
+    color: var(--text-secondary) !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease-in-out !important;
+    width: 100% !important;
+}
+
+/* Category header pseudo-injections */
+div[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > label:nth-child(1)::before {
+    content: "OVERVIEW";
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    padding: 8px 0 6px 0;
+    width: 100%;
+}
+
+div[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > label:nth-child(2)::before {
+    content: "ANALYTICS";
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    padding: 16px 0 6px 0;
+    width: 100%;
+}
+
+div[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > label:nth-child(6)::before {
+    content: "EXPERIMENTS";
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    padding: 16px 0 6px 0;
+    width: 100%;
+}
+
+div[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > label:nth-child(8)::before {
+    content: "INTELLIGENCE";
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    padding: 16px 0 6px 0;
+    width: 100%;
+}
+
+div[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > label:nth-child(11)::before {
+    content: "SYSTEM";
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    padding: 16px 0 6px 0;
+    width: 100%;
+}
+
+/* Hover style for sidebar navigation */
+div[data-testid="stSidebar"] div[data-testid="stRadio"] label:hover {
+    background-color: var(--bg-hover) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Selected item styling matching Reference 1 (#181818, white text) */
+div[data-testid="stSidebar"] div[data-testid="stRadio"] label:has(input:checked) {
+    background-color: #181818 !important;
+    border-color: transparent !important;
+    color: var(--text-primary) !important;
+}
+
+/* Hide standard radio dot circle */
+div[data-testid="stSidebar"] div[data-testid="stRadio"] label > div:first-child,
+div[data-testid="stSidebar"] div[data-testid="stRadio"] label > span:first-child {
+    display: none !important;
+}
+
+/* Custom logo positioning */
+.brand-container {
+    padding: 1.5rem 1rem 1rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Sidebar profile / footer section matching Reference 1 exactly */
+.sidebar-profile {
+    margin-top: auto !important;
+    background-color: transparent;
+    border-top: 1px solid var(--border);
+    padding: 1.25rem 1rem 0.5rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.profile-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.profile-card-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-avatar-circle {
+    width: 32px;
+    height: 32px;
+    background-color: var(--accent-blue);
+    color: var(--text-primary);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9999px;
+    font-size: 13px;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.2;
+}
+
+.profile-role {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.profile-dropdown-arrow {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+/* Theme toggle element row */
+.theme-toggle-row {
+    display: flex;
+    background-color: #0A0A0A;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 3px;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.theme-toggle-btn {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 13px;
+    padding: 4px 0;
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all 0.15s ease;
+}
+
+.theme-toggle-btn.active {
+    background-color: #1A1A1A;
+    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-copyright-info {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: left;
+    line-height: 1.4;
+    padding: 0 4px;
+}
+
+/* ----------------------------------------------------
+   SaaS Dashboard Content Layout Container Cards
+   ---------------------------------------------------- */
+.dashboard-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    height: 100%;
+}
+
+.card-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.25rem;
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+    letter-spacing: -0.015em;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.card-subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: -10px;
+    margin-bottom: 1.25rem;
+}
+
+.card-action-link {
+    font-size: 13px;
+    color: var(--accent-blue);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.card-action-link:hover {
+    text-decoration: underline;
+}
+
+/* ----------------------------------------------------
+   Alert / Info Banners Overrides (Subtle Charcoal)
+   ---------------------------------------------------- */
+div[data-testid="stAlert"] {
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 14px !important;
+    padding: 1rem 1rem !important;
+}
+
+div[data-testid="stAlert"] p {
+    color: var(--text-secondary) !important;
+    font-size: 14px !important;
+}
+
+/* ----------------------------------------------------
+   Stripe-style Table / Dataframe Customizations
+   ---------------------------------------------------- */
+/* Container rounding for raw dataframe views */
+[data-testid="stTable"], .stDataFrame {
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 14px !important;
+    overflow: hidden !important;
+}
+
+/* Table styling for markdown tables */
+table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    border: none !important;
+    font-size: 14px !important;
+}
+
+th {
+    background-color: #0A0A0A !important;
+    color: var(--text-primary) !important;
+    font-weight: 600 !important;
+    text-align: left !important;
+    padding: 12px 14px !important;
+    border-bottom: 1px solid var(--border) !important;
+    letter-spacing: -0.01em !important;
+}
+
+td {
+    padding: 12px 14px !important;
+    border-bottom: 1px solid var(--divider) !important;
+    color: var(--text-secondary) !important;
+    transition: background-color 0.15s ease !important;
+}
+
+tr:hover td {
+    background-color: var(--bg-hover) !important;
+    color: var(--text-primary) !important;
+}
+
+/* Custom mini performance tables inside dashboard cards */
+.metric-table {
+    width: 100%;
+    font-size: 13px;
+}
+
+.metric-table th {
+    padding: 8px 10px !important;
+    font-size: 12px;
+}
+
+.metric-table td {
+    padding: 8px 10px !important;
+}
+
+/* ----------------------------------------------------
+   Form Inputs & Control Overrides
+   ---------------------------------------------------- */
+div[data-testid="stSelectbox"] > div {
+    background-color: var(--bg-primary) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
+    color: var(--text-primary) !important;
+}
+
+/* Matte custom buttons */
+button {
+    background-color: var(--text-primary) !important;
+    color: var(--bg-primary) !important;
+    border: 1px solid var(--text-primary) !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    padding: 6px 14px !important;
+    transition: all 0.15s ease-in-out !important;
+}
+
+button:hover {
+    background-color: var(--text-secondary) !important;
+    border-color: var(--text-secondary) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* ----------------------------------------------------
+   Animations
+   ---------------------------------------------------- */
+.kpi-card, .top-nav, main, h1, h2, table, .dashboard-card {
+    animation: fadeIn 0.15s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ----------------------------------------------------
+   Custom Fixed Sidebar & Page Offset Layout
+   ---------------------------------------------------- */
+
+/* Hide Streamlit default sidebar and collapse button */
+[data-testid="stSidebar"], [data-testid="stSidebarCollapseButton"] {
+    display: none !important;
+    visibility: hidden !important;
+    width: 0 !important;
+}
+
+/* Offset main container section to make room for fixed 260px sidebar */
+[data-testid="stAppViewContainer"],
+section.main,
+.stMainBlockContainer,
+[data-testid="stMain"] {
+    box-sizing: border-box !important;
+}
+
+section.main,
+[data-testid="stMain"] {
+    margin-left: 260px !important;
+    width: calc(100% - 260px) !important;
+    max-width: calc(100% - 260px) !important;
+    box-sizing: border-box !important;
+}
+
+[data-testid="stAppViewBlockContainer"] {
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-top: 1.5rem !important;
+    padding-bottom: 2rem !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+    box-sizing: border-box !important;
+}
+
+/* Fixed Sidebar Styles */
+.custom-sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 260px !important;
+    height: 100vh !important;
+    overflow-y: auto !important;
+    z-index: 1000 !important;
+    background-color: var(--bg-sidebar) !important;
+    border-right: 1px solid var(--border) !important;
+    padding: 1.25rem 1rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    box-sizing: border-box !important;
+}
+
+.brand-container {
+    display: flex !important;
+    align-items: center !important;
+    padding: 0.25rem 0.25rem 1rem 0.25rem !important;
+    border-bottom: 1px solid var(--divider) !important;
+    margin-bottom: 1.25rem !important;
+}
+
+.sidebar-logo {
+    height: 38px !important;
+    width: auto !important;
+    max-width: 210px !important;
+    object-fit: contain !important;
+    display: block !important;
+}
+    letter-spacing: -0.02em !important;
+}
+
+.nav-groups-container {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1.5rem !important;
+}
+
+.nav-group {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+}
+
+.nav-group-title {
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    color: var(--text-muted) !important;
+    letter-spacing: 0.05em !important;
+    padding-left: 0.5rem !important;
+    margin-bottom: 4px !important;
+}
+
+.nav-group-items {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+}
+
+.nav-item {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 7px 12px !important;
+    border-radius: 8px !important;
+    color: var(--text-secondary) !important;
+    text-decoration: none !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    transition: all 0.15s ease-in-out !important;
+}
+
+.nav-item:hover {
+    background-color: var(--bg-hover) !important;
+    color: var(--text-primary) !important;
+}
+
+.nav-item.active {
+    background-color: var(--bg-hover) !important;
+    color: var(--text-primary) !important;
+    font-weight: 600 !important;
+    border: 1px solid var(--border) !important;
+}
+
+.nav-item-icon {
+    font-size: 14px !important;
+}
+
+.sidebar-bottom {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+    margin-top: auto !important;
+    padding-top: 1.5rem !important;
+    border-top: 1px solid var(--divider) !important;
+}
+
+.profile-card {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 6px 8px !important;
+    border-radius: 8px !important;
+    transition: background-color 0.15s ease !important;
+    cursor: pointer !important;
+}
+
+.profile-card:hover {
+    background-color: var(--bg-hover) !important;
+}
+
+.profile-card-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+}
+
+.profile-avatar-circle {
+    width: 28px !important;
+    height: 28px !important;
+    background-color: #2D2D2D !important;
+    color: var(--text-primary) !important;
+    border-radius: 999px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+}
+
+.profile-info {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.profile-name {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: var(--text-primary) !important;
+}
+
+.profile-role {
+    font-size: 10px !important;
+    color: var(--text-muted) !important;
+}
+
+.profile-dropdown-arrow {
+    font-size: 8px !important;
+    color: var(--text-muted) !important;
+}
+
+.theme-toggle-row {
+    display: flex !important;
+    background-color: var(--bg-primary) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
+    padding: 2px !important;
+    gap: 2px !important;
+}
+
+.theme-toggle-btn {
+    flex: 1 !important;
+    text-align: center !important;
+    font-size: 11px !important;
+    padding: 5px 0 !important;
+    border-radius: 6px !important;
+    color: var(--text-secondary) !important;
+    text-decoration: none !important;
+    font-weight: 500 !important;
+    transition: all 0.15s ease !important;
+}
+
+.theme-toggle-btn.active {
+    background-color: var(--bg-hover) !important;
+    color: var(--text-primary) !important;
+    font-weight: 600 !important;
+    border: 1px solid var(--border) !important;
+}
+
+.sidebar-copyright-info {
+    font-size: 10px !important;
+    color: var(--text-muted) !important;
+    line-height: 1.4 !important;
+}
+
+/* ----------------------------------------------------
+   Top Navigation Flex Layout Overrides (Streamlit Columns)
+   ---------------------------------------------------- */
+
+.top-nav-anchor {
+    display: none !important;
+}
+
+/* Style the columns in the first row after top-nav-anchor as top bar */
+.top-nav-anchor + div {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    border-bottom: 1px solid var(--border) !important;
+    padding: 0.5rem 0 !important;
+    margin-bottom: 1.5rem !important;
+    background-color: var(--bg-primary) !important;
+    width: 100% !important;
+}
+
+/* Centered vertical aligning for columns inside top nav */
+.top-nav-anchor + div > div[data-testid="column"] {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    justify-content: flex-start !important;
+}
+
+/* Align right column items to end */
+.top-nav-anchor + div > div[data-testid="column"]:last-child {
+    justify-content: flex-end !important;
+}
+
+/* Styled text input for global search */
+.top-nav-anchor + div div[data-testid="stTextInput"] {
+    width: 100% !important;
+}
+
+.top-nav-anchor + div div[data-testid="stTextInput"] input {
+    background-color: #0E0E0E !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
+    padding: 6px 12px 6px 30px !important;
+    font-size: 13px !important;
+    color: var(--text-primary) !important;
+    width: 100% !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%236B7280' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: 10px center !important;
+}
+
+/* Top bar custom live badge button layout */
+.live-badge {
+    background-color: rgba(34, 197, 94, 0.1) !important;
+    color: var(--success) !important;
+    border: 1px solid rgba(34, 197, 94, 0.2) !important;
+    border-radius: 6px !important;
+    padding: 4px 8px !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+}
+
+.live-dot {
+    width: 6px !important;
+    height: 6px !important;
+    background-color: var(--success) !important;
+    border-radius: 999px !important;
+    display: inline-block !important;
+    box-shadow: 0 0 8px var(--success) !important;
+}
+
+/* Clean transparent selectbox layout in top nav */
+.top-nav-anchor + div div[data-testid="stSelectbox"] {
+    width: auto !important;
+    min-width: 170px !important;
+}
+
+.top-nav-anchor + div div[data-testid="stSelectbox"] > div > div {
+    background-color: #0E0E0E !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
+    font-size: 12px !important;
+}
+
+/* Style top navigation buttons to look like Vercel buttons */
+.top-nav-anchor + div button {
+    background-color: #0E0E0E !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 8px !important;
+    color: var(--text-secondary) !important;
+    padding: 5px 12px !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+}
+
+.top-nav-anchor + div button:hover {
+    background-color: var(--bg-hover) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border) !important;
+    transform: none !important;
+}
+
+/* Profile button specific overrides */
+#btn_profile, button[key="btn_profile"] {
+    background-color: #2D2D2D !important;
+    color: var(--text-primary) !important;
+    border-radius: 999px !important;
+    width: 28px !important;
+    height: 28px !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+}
+
+/* Drawer overlays styling */
+.notification-drawer {
+    position: fixed !important;
+    right: 240px !important;
+    top: 70px !important;
+    width: 320px !important;
+    background-color: rgba(16, 16, 16, 0.96) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 12px !important;
+    z-index: 9999999 !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6) !important;
+    backdrop-filter: blur(10px) !important;
+    padding: 12px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    animation: fadeIn 0.12s ease-out !important;
+}
+
+.drawer-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding-bottom: 6px !important;
+    border-bottom: 1px solid var(--divider) !important;
+}
+
+.drawer-header h4 {
+    margin: 0 !important;
+    font-size: 13px !important;
+    color: var(--text-primary) !important;
+    font-weight: 600 !important;
+}
+
+.drawer-close {
+    font-size: 10px !important;
+    color: var(--text-muted) !important;
+    cursor: pointer !important;
+}
+
+.drawer-body {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+}
+
+.alert-item {
+    display: flex !important;
+    gap: 10px !important;
+    padding: 8px !important;
+    border-radius: 6px !important;
+    transition: background-color 0.15s ease !important;
+}
+
+.alert-item:hover {
+    background-color: var(--bg-hover) !important;
+}
+
+.alert-item.unread {
+    background-color: rgba(255, 255, 255, 0.02) !important;
+}
+
+.alert-indicator {
+    font-size: 8px !important;
+    line-height: 1 !important;
+    margin-top: 4px !important;
+}
+
+.alert-indicator.success { color: var(--success); }
+.alert-indicator.danger { color: var(--danger); }
+.alert-indicator.warning { color: var(--warning); }
+
+.alert-info {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+}
+
+.alert-text {
+    font-size: 12px !important;
+    color: var(--text-primary) !important;
+    margin: 0 !important;
+    line-height: 1.3 !important;
+}
+
+.alert-time {
+    font-size: 10px !important;
+    color: var(--text-muted) !important;
+}
+
+/* Profile floating menu list */
+.profile-menu {
+    position: fixed !important;
+    right: 170px !important;
+    top: 70px !important;
+    width: 220px !important;
+    background-color: rgba(16, 16, 16, 0.96) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 12px !important;
+    z-index: 9999999 !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6) !important;
+    backdrop-filter: blur(10px) !important;
+    padding: 8px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 2px !important;
+    animation: fadeIn 0.12s ease-out !important;
+}
+
+.profile-menu-header {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 8px !important;
+}
+
+.profile-menu-info {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.profile-menu-name {
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    color: var(--text-primary) !important;
+}
+
+.profile-menu-email {
+    font-size: 10px !important;
+    color: var(--text-muted) !important;
+}
+
+.menu-divider {
+    border: 0 !important;
+    height: 1px !important;
+    background-color: var(--divider) !important;
+    margin: 4px 0 !important;
+}
+
+.menu-item {
+    display: flex !important;
+    align-items: center !important;
+    padding: 6px 10px !important;
+    font-size: 12px !important;
+    color: var(--text-secondary) !important;
+    text-decoration: none !important;
+    border-radius: 6px !important;
+    transition: all 0.12s ease !important;
+}
+
+.menu-item:hover {
+    background-color: var(--bg-hover) !important;
+    color: var(--text-primary) !important;
+}
+
+.menu-item.logout {
+    color: var(--danger) !important;
+}
+
+.menu-item.logout:hover {
+    background-color: rgba(239, 68, 68, 0.08) !important;
+}

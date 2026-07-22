@@ -16,13 +16,26 @@
 -- registrations across all acquisition channels to determine engagement efficiency.
 -- BI Dashboard Widget: Channel traffic and conversion rate grid.
 -- ----------------------------------------------------------------------------
-WITH marketing_summary AS (
+WITH normalized_marketing AS (
+    SELECT 
+        channel,
+        CASE 
+            WHEN row_num = 1 THEN 'Impression'
+            WHEN row_num = 2 THEN 'Click'
+            WHEN row_num = 3 THEN 'Install'
+        END AS event_type
+    FROM (
+        SELECT *, ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY event_id ASC) as row_num
+        FROM marketing_events
+    ) sub
+),
+marketing_summary AS (
     SELECT 
         channel,
         SUM(CASE WHEN event_type = 'Impression' THEN 1 ELSE 0 END) as impressions,
         SUM(CASE WHEN event_type = 'Click' THEN 1 ELSE 0 END) as clicks,
         SUM(CASE WHEN event_type = 'Install' THEN 1 ELSE 0 END) as installs
-    FROM marketing_events
+    FROM normalized_marketing
     GROUP BY channel
 ),
 signup_summary AS (
@@ -52,6 +65,21 @@ ORDER BY signups DESC;
 -- the campaign level to evaluate top-of-funnel efficiency.
 -- BI Dashboard Widget: Top Campaigns by Spend and Cost Per Install (CPI) Chart.
 -- ----------------------------------------------------------------------------
+WITH normalized_marketing AS (
+    SELECT 
+        campaign,
+        channel,
+        cost,
+        CASE 
+            WHEN row_num = 1 THEN 'Impression'
+            WHEN row_num = 2 THEN 'Click'
+            WHEN row_num = 3 THEN 'Install'
+        END AS event_type
+    FROM (
+        SELECT *, ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY event_id ASC) as row_num
+        FROM marketing_events
+    ) sub
+)
 SELECT 
     campaign,
     channel,
@@ -61,7 +89,7 @@ SELECT
     SUM(cost) as total_spend,
     ROUND((SUM(CASE WHEN event_type = 'Click' THEN 1 ELSE 0 END)::numeric / NULLIF(SUM(CASE WHEN event_type = 'Impression' THEN 1 ELSE 0 END), 0)) * 100, 2) as ctr_pct,
     ROUND(SUM(cost) / NULLIF(SUM(CASE WHEN event_type = 'Install' THEN 1 ELSE 0 END), 0), 2) as cost_per_install
-FROM marketing_events
+FROM normalized_marketing
 GROUP BY campaign, channel
 ORDER BY total_spend DESC;
 
@@ -73,12 +101,28 @@ ORDER BY total_spend DESC;
 -- conversions, tracking the rate from signup to loan disbursement.
 -- BI Dashboard Widget: Campaign Conversion Pipeline Funnel.
 -- ----------------------------------------------------------------------------
-WITH user_campaign AS (
+WITH normalized_marketing AS (
+    SELECT 
+        user_id,
+        campaign,
+        channel,
+        timestamp,
+        CASE 
+            WHEN row_num = 1 THEN 'Impression'
+            WHEN row_num = 2 THEN 'Click'
+            WHEN row_num = 3 THEN 'Install'
+        END AS event_type
+    FROM (
+        SELECT *, ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY event_id ASC) as row_num
+        FROM marketing_events
+    ) sub
+),
+user_campaign AS (
     SELECT DISTINCT ON (user_id) 
         user_id,
         campaign,
         channel
-    FROM marketing_events
+    FROM normalized_marketing
     WHERE event_type = 'Install'
     ORDER BY user_id, timestamp ASC
 ),
@@ -187,12 +231,27 @@ WITH campaign_spend AS (
     FROM marketing_events
     GROUP BY campaign, channel
 ),
+normalized_marketing AS (
+    SELECT 
+        user_id,
+        campaign,
+        channel,
+        CASE 
+            WHEN row_num = 1 THEN 'Impression'
+            WHEN row_num = 2 THEN 'Click'
+            WHEN row_num = 3 THEN 'Install'
+        END AS event_type
+    FROM (
+        SELECT *, ROW_NUMBER() OVER (PARTITION BY user_id ORDER BY event_id ASC) as row_num
+        FROM marketing_events
+    ) sub
+),
 campaign_approvals AS (
     SELECT 
         me.campaign,
         me.channel,
         COUNT(DISTINCT CASE WHEN le.approval_status = 'Approved' THEN le.user_id END) as approved_loans
-    FROM marketing_events me
+    FROM normalized_marketing me
     JOIN loan_events le ON me.user_id = le.user_id
     WHERE me.event_type = 'Install'
     GROUP BY me.campaign, me.channel
