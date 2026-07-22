@@ -1,3 +1,4 @@
+<img width="1280" height="800" alt="Executive Overview" src="https://github.com/user-attachments/assets/13dd63fc-a8d2-4cbd-a7f4-50c6071fff93" />
 <div align="center">
 
 <img src="assets/logo.png" alt="InsightFlow Logo" width="140"/>
@@ -34,8 +35,9 @@ The project simulates a real-world fintech analytics ecosystem using a fictional
 > Replace the placeholders below with actual screenshots after pushing.
 
 ## Executive Overview
+<img width="1280" height="800" alt="Executive Overview" src="https://github.com/user-attachments/assets/f3a9a249-7f20-4184-b4a2-05ed67535866" />
 
-![](docs/screenshots/executive-dashboard.png)
+
 
 ---
 
@@ -47,19 +49,22 @@ The project simulates a real-world fintech analytics ecosystem using a fictional
 
 ## Marketing Attribution
 
-![](docs/screenshots/marketing-dashboard.png)
+<img width="1280" height="800" alt="Marketing Attribution" src="https://github.com/user-attachments/assets/10c156ec-8e6f-4045-a154-669eed620242" />
+
 
 ---
 
 ## Customer Intelligence
 
-![](docs/screenshots/customer-dashboard.png)
+<img width="1280" height="800" alt="Customer Portfolio Analytics" src="https://github.com/user-attachments/assets/964753fb-604a-4a1b-96b3-94abefae8d44" />
+
 
 ---
 
 ## Experiment Analytics
 
-![](docs/screenshots/experiments-dashboard.png)
+<img width="1280" height="800" alt="Experiment Analytics" src="https://github.com/user-attachments/assets/15e038b9-5e05-45b7-94af-59ccdc4944c6" />
+
 
 ---
 
@@ -290,7 +295,7 @@ B.Tech Computer Science (AI & Data Engineering)
 Passionate about Data Analytics, Product Analytics, Business Intelligence, and AI-powered decision systems.
 
 - GitHub: https://github.com/mohithkrishnaa
-- LinkedIn: *(Add your LinkedIn URL here)*
+- LinkedIn: https://www.linkedin.com/in/mohith-krishnaa/
 
 ---
 
